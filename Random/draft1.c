@@ -248,6 +248,68 @@ int main (int argc, char *argv[]) {
     // UTC time: 5:00pm on 1st October, time in Sydney: 4:00am
     assert(getLocalTime(CITY_SYDNEY, 1, 10, 1700) == 400);
 
+    assert(getLocalTime(CITY_CANBERRA, 6, 6, 356) == 1356);
+
+    // UTC time: 3:30pm on 1st April, time in Melbourne: 2:30 am on the 2nd
+    assert(getLocalTime(CITY_MELBOURNE, 1, 4, 1530) == 230);
+
+
+
+
+    // UTC time: 4:30pm on 1st April, time in Melbourne: 2:30 am on the 2nd
+    assert(getLocalTime(CITY_MELBOURNE, 1, 4, 1630) == 230);
+
+
+
+
+    // UTC time: 3:59pm on 30th September, time in Sydney: 1:59 am on October 1st
+    assert(getLocalTime(CITY_SYDNEY, 30, 9, 1559) == 159);
+
+
+
+
+    // UTC time: 4:00pm on 30th September, time in Sydney: 3:00 am on October 1st
+    assert(getLocalTime(CITY_SYDNEY, 30, 9, 1600) == 300);
+
+    // UTC time: 2:59 pm on 1st April, time in Lord Howe Island: 1:59am
+    assert(getLocalTime(CITY_LORD_HOWE_IS, 1, 4, 1459) == 159);
+    // UTC time: 3:00 pm on 1st April, time in Lord Howe Island: 1:30am
+    assert(getLocalTime(CITY_LORD_HOWE_IS, 1, 4, 1500) == 130);
+
+    //UTC time: 3:29 pm on 30th September, time in Lord Howe Island: 1:59am
+    assert(getLocalTime(CITY_LORD_HOWE_IS, 30, 9, 1529) == 159);
+    // UTC time: 3:30 pm on 30th September, time in Lord Howe Island: 2:30am
+    assert(getLocalTime(CITY_LORD_HOWE_IS, 30, 9, 1530) == 230);
+
+    assert(getLocalTime(CITY_MELBOURNE, 24, 12, 1300) == 0);
+
+
+    // UTC time: 1:30pm on 24th December, time in Broken Hill: midnight
+
+    assert(getLocalTime(CITY_BROKEN_HILL, 24, 12, 1330) == 0);
+
+
+    // UTC time: 11:00am on 24th December, time in Wellington: midnight
+
+    assert(getLocalTime(CITY_WELLINGTON, 24, 12, 1100) == 0);
+
+    assert(getLocalTime(CITY_LORD_HOWE_IS, 1, 4, 1430) == 130);
+
+    assert(getLocalTime(CITY_LORD_HOWE_IS, 2, 1, 830) == 1930);
+
+    assert(getLocalTime(CITY_LORD_HOWE_IS, 1, 4, 830) == 1930);
+
+    assert(getLocalTime(CITY_WELLINGTON, 23, 9, 830) == 2030);
+
+    assert(getLocalTime(CITY_SYDNEY, 30, 9, 730) == 1730);
+
+    assert(getLocalTime(CITY_SYDNEY, 23, 9, 2230) == 830);
+
+    assert(getLocalTime(CITY_SYDNEY, 30, 9, 2230) == 930);
+
+    assert(getLocalTime(CITY_LORD_HOWE_IS, 30, 9, 2230) == 930);
+
+    assert(getLocalTime(CITY_WELLINGTON, 30, 9, 2230) == 1130);
 
 
     // Add your own tests here
@@ -606,7 +668,9 @@ int getRealTime (int city, int day, int month, int localTime, int timeUTC) {
                         return a;
                     }
                 } else {
-                    return localTime;
+                    int a;
+                    a = conversionDST1(localTime);
+                    return a;
                 }
             } else if (day == 2) {
                 if (localTime < 200) {
@@ -684,7 +748,9 @@ int getRealTime (int city, int day, int month, int localTime, int timeUTC) {
                         return a;
                     }
                 } else {
-                    return localTime;
+                    int a;
+                    a = conversionDST2(localTime);
+                    return a;
                 }
             } else if (day == 2) {
                 if (localTime < 200) {
@@ -762,7 +828,9 @@ int getRealTime (int city, int day, int month, int localTime, int timeUTC) {
                         return a;
                     }
                 } else {
-                    return localTime;
+                    int a;
+                    a = conversionDST1(localTime);
+                    return a;
                 }
             } else if (day == 2) {
                 if (localTime < 200) {
