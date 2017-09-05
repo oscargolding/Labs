@@ -7,7 +7,6 @@
 // Written on 2017-09-??
 // Tutor (dayHH-lab)
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,7 +58,6 @@ double myAtoD (char *message) {
     double result = 0;
     double neg = 1;
     int power = 1;
-    if (message[i] != '.') {
     while (message[i] != '/' && message[i] != '.') {
         i++;
         if (message[i] == '-'){
@@ -68,14 +66,13 @@ double myAtoD (char *message) {
         result = 10 * result + (message[i] - '0');
         printf("First %f\n", result);
     }
-}   else {
     while(message[i] != '/'){
         result = result + ((message[i] - '0')/power);
         power = power * 10;
         i++;
         printf("Second %f\n", result);
     }
-}
+
     result = result * neg;
     return result;
 
