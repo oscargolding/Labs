@@ -6,7 +6,6 @@
 //    ... (z0000000)
 // Written on 2017-09-??
 // Tutor (dayHH-lab)
-// This is working??? 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -69,22 +68,19 @@ double myAtoD (char *message) {
             i = 2;
         }
         result = 10 * result + (message[i] - '0');
-        printf("First %f\n", result);
         i++;
     }
     if (message[i] == '.') {
         i = i + 1;
     }
-    printf("%d\n", i);
     while (message[i] != '/') {
         result = result + ((message[i] - '0')/power);
         power = power * 10;
         i++;
-        printf("Second %f\n", result);
     }
     result = result * neg;
-    return result*1000/1000;
-
+    result = (result * 1000)/1000;
+    return result;
 }
 long myAtoL (char *message){
     int i = 2;
