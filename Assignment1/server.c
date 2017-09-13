@@ -48,6 +48,7 @@ void routeRequest(int socket, char requestBuffer[REQUEST_BUFFER_SIZE]);
 void serveIndex(int socket);
 void sendHtmlHeader(int socket);
 void serveImage(int socket, double x, double y, int z);
+static void serveHTML (int socket);
 
 // Write an image to output
 void sendBitmapHeader (int socket);
@@ -171,7 +172,34 @@ int waitForConnection (int serverSocket) {
 // Takes in a string that contains the requested URL, and parses it to
 // determine what response to send back to the browser.
 void routeRequest(int socket, char requestBuffer[REQUEST_BUFFER_SIZE]) {
-    // TODO: COMPLETE THIS FUNCTION
+
+    int z;
+    complex centre;
+
+    if (sscanf(requestBuffer, "GET /mandelbrot/2/%d/%lf/%lf/tile.bmp"
+        , &z, &centre.im, &centre.re) == 3) {
+        serveImage(socket, centre.im, centre.re, z);
+    } else {
+        serveHTML(socket);
+    }
+    printf("z = %d, centre = %lf %lf", z, centre.im, centre.re);
+}
+
+static void serveHTML (int socket) {
+   char* message;
+
+   // first send the http response header
+   message =
+      "HTTP/1.0 200 Found\n"
+      "Content-Type: text/html\n"
+      "\n";
+   printf ("about to send=> %s\n", message);
+   write (socket, message, strlen (message));
+
+   message =
+      "<script src=\"http://almondbread.cse.unsw.edu.au/tiles.js\"></script>"
+      "\n";
+   write (socket, message, strlen (message));
 }
 
 // Serve the tile image
