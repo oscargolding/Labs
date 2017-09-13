@@ -18,8 +18,12 @@ static double power(int base, int power);
 int main(void) {
 
 
-    testEscapeSteps();
+    //testEscapeSteps();
     //printAsterix ();
+    int grid[TILE_SIZE][TILE_SIZE];
+    complex center = {5, 5};
+    //printf("%f %f", center.im, center.re);
+    escapeGrid(grid, center, 8);
 
 
     return 0;
@@ -78,12 +82,9 @@ void testEscapeSteps(void) {
                 //printf("Steps = %d\n", escapeSteps(c));
             }
             //printf("c = %lf %lf\n", c.re, c.im);
-
             x++;
-
         }
         y--;
-
     } */
     /*double i = 0;
     double j = 0;
@@ -136,9 +137,9 @@ void testEscapeSteps(void) {
    double scaleX, scaleY;
    double scale;
    scale = 1 / power(2, DRAWING_ZOOM);
-   row = 0;
-   while (row < TERMINAL_HEIGHT) {
-       column = 0;
+   row = TERMINAL_HEIGHT;
+   while (row > -TERMINAL_HEIGHT) {
+       column = -TERMINAL_WIDTH;
             while (column < TERMINAL_WIDTH) {
                // centering
                scaleX = -(TERMINAL_WIDTH / 2) * scale;
@@ -158,7 +159,7 @@ void testEscapeSteps(void) {
                column++;
            }
            printf("\n");
-           row++;
+           row--;
 
        }
 }
