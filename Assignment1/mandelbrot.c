@@ -15,6 +15,7 @@
 #include <stdlib.h>
 
 
+
 // Add your own #defines here
 
 #define BREAK_OUT 4
@@ -51,7 +52,7 @@ void drawMandelbrot(pixel pixels[TILE_SIZE][TILE_SIZE],
     int column;
     while (row < TILE_SIZE){
         column = 0;
-        while (column < TILE_SIZE){
+        while (column < TILE_SIZE) {
             pixels[row][column] = pixelColor(grid[row][column]);
             column++;
         }
@@ -80,31 +81,39 @@ int escapeSteps(complex c) {
 
 // Fill a grid of TILE_SIZE by TILE_SIZE pixels, with the number of
 // steps each pixel took to escape the Mandelbrot set.
-void escapeGrid(int grid[TILE_SIZE][TILE_SIZE],
-        complex center, int z) {
+void escapeGrid(int grid[TILE_SIZE][TILE_SIZE], complex center, int z) {
 
     // TODO: COMPLETE THIS FUNCTION
     int column;
     int row = 0;
     double X, Y;
     double scale;
-    scale = 1 / power(2, z);
+    scale = 1 / (power(2, z));
+    double length = scale * (TILE_SIZE - 1);
+    double ab;
+    center.re = center.re - (length / 2);
+    ab = center.re;
+    center.im = center.im - (length / 2);
+
     //20 + TILE_SIZE/2;
     while (row < TILE_SIZE) {
+        center.re = ab;
         column = 0;
         //column = 20 - TILE_SIZE/2;
         while (column < TILE_SIZE) {
             // centering
-            X = (center.re - (TILE_SIZE / 2) + column) * scale;
-            Y = (center.im - (TILE_SIZE / 2) + row) * scale;
+            // The code below is the problem, it's somehow printing off
+            // duplicates of the set.
+
             // calculate current point
             //X = X + (column * scale);
             //Y = Y + (row * scale);
             //printf("%d, %d\n", column, row);
             //printf("%lf, %lf\n", scaleX, scaleY);
-            complex c = {X, Y};
+            complex g = {center.re, center.im};
+            //printf("%lf %lf\n", g.re, g.im);
 
-            grid[row][column] = escapeSteps(c);
+            grid[row][column] = escapeSteps(g);
             //if (grid[row][column] == 256) {
                 //printf("*");
             //}
@@ -112,9 +121,10 @@ void escapeGrid(int grid[TILE_SIZE][TILE_SIZE],
                 //printf(" ");
             //}
             column++;
+            center.re += scale;
         }
         row++;
-        //printf("\n");
+        center.im += scale;
     }
 }
 
