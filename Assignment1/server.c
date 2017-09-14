@@ -174,15 +174,15 @@ int waitForConnection (int serverSocket) {
 void routeRequest(int socket, char requestBuffer[REQUEST_BUFFER_SIZE]) {
 
     int z;
-    complex centre;
+    complex centre1;
 
     if (sscanf(requestBuffer, "GET /mandelbrot/2/%d/%lf/%lf/tile.bmp"
-        , &z, &centre.im, &centre.re) == 3) {
-        serveImage(socket, centre.im, centre.re, z);
+        , &z, &centre1.re, &centre1.im) == 3) {
+        serveImage(socket, centre1.re, centre1.im, z);
     } else {
         serveHTML(socket);
     }
-    printf("z = %d, centre = %lf %lf", z, centre.im, centre.re);
+    printf("z = %d, centre1 = %lf %lf", z, centre1.re, centre1.im);
 }
 
 static void serveHTML (int socket) {
@@ -209,7 +209,7 @@ void serveImage(int socket, double x, double y, int z) {
 
     complex center;
     center.re = x;
-    center.im = -y;
+    center.im = y;
     drawMandelbrot(pixels, center, z);
 
     // Send the image to the client

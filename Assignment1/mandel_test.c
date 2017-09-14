@@ -18,12 +18,13 @@ static double power(int base, int power);
 int main(void) {
 
 
-    //testEscapeSteps();
+    testEscapeSteps();
     //printAsterix ();
     int grid[TILE_SIZE][TILE_SIZE];
     complex center = {5, 5};
     //printf("%f %f", center.im, center.re);
-    escapeGrid(grid, center, 8);
+    //escapeGrid(grid, center, 8);
+
 
 
     return 0;
@@ -137,13 +138,13 @@ void testEscapeSteps(void) {
    double scaleX, scaleY;
    double scale;
    scale = 1 / power(2, DRAWING_ZOOM);
-   row = TERMINAL_HEIGHT;
-   while (row > -TERMINAL_HEIGHT) {
-       column = -TERMINAL_WIDTH;
-            while (column < TERMINAL_WIDTH) {
+   row = TILE_SIZE;
+   while (row > -TILE_SIZE) {
+       column = -TILE_SIZE;
+            while (column < TILE_SIZE) {
                // centering
-               scaleX = -(TERMINAL_WIDTH / 2) * scale;
-               scaleY = -(TERMINAL_HEIGHT / 2) * scale;
+               scaleX = -(TILE_SIZE / 2) * scale;
+               scaleY = -(TILE_SIZE / 2) * scale;
                // calculate current point
                scaleX = scaleX + (column * scale);
                scaleY = scaleY + (row * scale);

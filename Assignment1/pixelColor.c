@@ -16,7 +16,6 @@
 // You have artistic licence here, so make your Mandelbrot look amazing.
 pixel pixelColor(int steps) {
     pixel color = {
-
         .red = steps,
         .green = steps,
         .blue = steps
