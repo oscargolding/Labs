@@ -17,27 +17,15 @@ For each of those components or steps above, work out what is involved/required,
  and decide who is going to do it (or whether you will work on it together):
 
 What needs doing? |	What does it involve?	| How long will it take? | Who's going to do it?
-escapeSteps function in mandelbrot.c	| Determines whether a particular set of co-ordinates are in the Mandelbrot set or not. 
- This will return an int, which is the number of steps required to escape the set. The logic should be further broken down into 
- more functions in order to implement this.	| 60min +	| Oscar + Jack
-drawMandelBrot function in mandelbrot.c	| Need to use nested while loops in order to print out a Mandelbrot tile. 
- The function escapeSteps will have to be called in order to test this. An int called z is also used as a form of pixel jump. 
- Testing on this function should be done using ASCII symbols. After the completion of escapeGrid , the drawMandelBrot function will call 
- on this directly.	| 120min +	| Jack + Michaela
-escapeGrid function in mandelbrot.c | Fills an array that determines the number of steps it took for each pixel to escape the mandelbrot 
- set. This will then be called in the function called drawMandelBrot so that its grid can be printed out.	| 120 min +	| Oscar + Michaela
-routeRequest function in server.c |	Use the existing server logic in order to print it out within a browser. 
- The function should act to both take in certain coordinates and zoom levels, and return an image of the location in the Mandelbrot set. 
- Moreover, logic should be installed within the function so that a general image can be produced. Some preliminary testing should be 
- done on the Week6 poetry server to see the image that has been produced. |	180min +	| Oscar + Jack
-pixelColor in pixelColor.c	| This adds unique colours to certain parts of the Mandelbrot image using structs and relevant RGB values. 
- Some initial testing on this can be done by moving from black and white towards the different colours.	| 180min+	| Oscar + Michaela
-Debugging	| Check for cases that haven't been considered so as to catch unique conditions that might break the code.	
- | 180min +	| Oscar + Jack + Michaela
-Attached static functions to the above cases. |	There will need to be supporting functions to the above. This will help to break down the 
- logic and make it more readable.	| 120min +	| Oscar + Jack + Michaela
-Individually testing the above functions. |	All the functions will need to be tested for correctness before the next part of the 
- assignment can be done.	| 60 min + |	Oscar + Jack + Michaela
+----------------- | --------------------- | ---------------------- | ---------------------
+escapeSteps function in mandelbrot.c	| Determines whether a particular set of co-ordinates are in the Mandelbrot set or not. This will return an int, which is the number of steps required to escape the set. The logic should be further broken down into more functions in order to implement this.	| 60min +	| Oscar + Jack
+drawMandelBrot function in mandelbrot.c	| Need to use nested while loops in order to print out a Mandelbrot tile. The function escapeSteps will have to be called in order to test this. An int called z is also used as a form of pixel jump. Testing on this function should be done using ASCII symbols. After the completion of escapeGrid , the drawMandelBrot function will call on this directly.	| 120min +	| Jack + Michaela
+escapeGrid function in mandelbrot.c | Fills an array that determines the number of steps it took for each pixel to escape the mandelbrot set. This will then be called in the function called drawMandelBrot so that its grid can be printed out.	| 120 min +	| Oscar + Michaela
+routeRequest function in server.c |	Use the existing server logic in order to print it out within a browser. The function should act to both take in certain coordinates and zoom levels, and return an image of the location in the Mandelbrot set. Moreover, logic should be installed within the function so that a general image can be produced. Some preliminary testing should be done on the Week6 poetry server to see the image that has been produced. |	180min +	| Oscar + Jack
+pixelColor in pixelColor.c	| This adds unique colours to certain parts of the Mandelbrot image using structs and relevant RGB values. Some initial testing on this can be done by moving from black and white towards the different colours.	| 180min+	| Oscar + Michaela
+Debugging	| Check for cases that haven't been considered so as to catch unique conditions that might break the code. | 180min +	| Oscar + Jack + Michaela
+Attached static functions to the above cases. |	There will need to be supporting functions to the above. This will help to break down the logic and make it more readable.	| 120min +	| Oscar + Jack + Michaela
+Individually testing the above functions. |	All the functions will need to be tested for correctness before the next part of the assignment can be done.	| 60 min + |	Oscar + Jack + Michaela
  
  **Learning from experience: Assignment 0**
  
