@@ -1,11 +1,12 @@
 // Assignment 1 Mandelbrot
 //
 // Completed by
-//  ... (z0000000)
-//  ... (z0000000)
-//
+//  Michaela (z5117328)
+//  Jack (z5162832)
+//  Oscar (z5160173)
 // Modified on 2017-??-??
 // Tutor's name (dayHH-lab)
+// Alex Hinds (Tuesday 9-12)
 
 // Originally by Richard Buckland 28/01/11, 30/3/14.
 // Licensed under Creative Commons SA-BY-NC 3.0, share freely.
@@ -20,6 +21,7 @@
 #include <unistd.h>
 #include <math.h>
 #include "mandelbrot.h"
+#include <signal.h>
 
 #define SIMPLE_SERVER_VERSION 3.0
 #define REQUEST_BUFFER_SIZE 1000
@@ -55,6 +57,8 @@ void sendBitmapHeader (int socket);
 void sendImage(int socket, pixel pixels[TILE_SIZE][TILE_SIZE]);
 
 int main (int argc, char* argv[]) {
+
+    signal (SIGPIPE, SIG_IGN);
 
     printf("[SERVER] Starting simple server %.2f\n", SIMPLE_SERVER_VERSION);
     printf("[SERVER] Serving poetry since 2011\n");
@@ -173,9 +177,15 @@ int waitForConnection (int serverSocket) {
 // determine what response to send back to the browser.
 void routeRequest(int socket, char requestBuffer[REQUEST_BUFFER_SIZE]) {
 
+    // First declare the zoom variable and a new struct called centre1.
     int z;
     complex centre1;
 
+    // Make use of sscanf to easily do the parsing of the respective
+    // zoom, x-location and y-location. If the function returns three
+    // inputs, this means that the user has provided a URL that
+    // contains a certain location in the Mandelbrot set. If not,
+    // bring up the interactive browser.
     if (sscanf(requestBuffer, "GET /mandelbrot/2/%d/%lf/%lf/tile.bmp"
         , &z, &centre1.re, &centre1.im) == 3) {
         serveImage(socket, centre1.re, centre1.im, z);
@@ -184,7 +194,8 @@ void routeRequest(int socket, char requestBuffer[REQUEST_BUFFER_SIZE]) {
     }
     printf("z = %d, centre1 = %lf %lf", z, centre1.re, centre1.im);
 }
-
+// Code provided on WebCMS3 for doing a default socket search to get
+// a basic output without parsing any values in.
 static void serveHTML (int socket) {
    char* message;
 

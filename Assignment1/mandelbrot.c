@@ -1,11 +1,12 @@
 // Assignment 1 Mandelbrot
 //
 // Completed by
-//  ... (z0000000)
-//  ... (z0000000)
-//
-// Modified on 2017-??-??
+//  Michaela (z5117328)
+//  Jack (z5162832)
+//  Oscar (z5160173)
+// Modified on 2017-16-09
 // Tutor's name (dayHH-lab)
+// Alex Hinds (Tuesday 9-12)
 
 // Add your own #includes here
 
@@ -13,8 +14,6 @@
 #include "pixelColor.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-
 
 // Add your own #defines here
 
@@ -26,9 +25,6 @@ static complex complexAdd(complex a, complex b);
 static complex complexMultiply(complex a, complex b);
 static double complexAbsolute(complex c);
 static double power (int base, int power);
-
-
-
 
 // Draw a single Mandelbrot tile, by calculating and colouring each of
 // the pixels in the tile.
@@ -46,10 +42,14 @@ void drawMandelbrot(pixel pixels[TILE_SIZE][TILE_SIZE],
         complex center, int z) {
     printf("centre = %lf %lfi\n", center.re, center.im);
     // hint: use this array to store the result from escapeGrid.
+    // Initialise a given two-dimensial arrays with the number of steps
+    // it took to reach a breakout point.
     int grid[TILE_SIZE][TILE_SIZE];
     escapeGrid(grid, center, z);
     int row = 0;
     int column;
+    // Use a while loop to assign the steps to a relevant RGB value
+    // that can be used for BMP images.
     while (row < TILE_SIZE){
         column = 0;
         while (column < TILE_SIZE) {
@@ -58,20 +58,16 @@ void drawMandelbrot(pixel pixels[TILE_SIZE][TILE_SIZE],
         }
         row++;
     }
-
 }
-
 // Determine the number of steps required to escape the Mandelbrot set,
 // for the given complex number `c`.
 int escapeSteps(complex c) {
-
-    // TODO: COMPLETE THIS FUNCTION
+    // Sets the reference point for the Mandelbrot mathematics.
     int steps = 0;
     complex start = {0, 0};
-
-    // TODO: COMPLETE THIS FUNCTION
+    // Uses a loop to determine the number of steps before a brakout
+    // point is actually reached.
     while (complexAbsolute(start) < BREAK_OUT && steps < MAX_STEPS) {
-        //start = complexAdd(start, c);
         start = complexMultiply(start, start);
         start = complexAdd(start, c);
         steps++;
@@ -82,56 +78,39 @@ int escapeSteps(complex c) {
 // Fill a grid of TILE_SIZE by TILE_SIZE pixels, with the number of
 // steps each pixel took to escape the Mandelbrot set.
 void escapeGrid(int grid[TILE_SIZE][TILE_SIZE], complex center, int z) {
-
-    // TODO: COMPLETE THIS FUNCTION
+    // Sets up the starting location and the variables that are needed
+    // in order to start at the right location.
     int column;
-    int row = 0;
-    double X, Y;
     double scale;
+    int row = 0;
     scale = 1 / (power(2, z));
-    double length = scale * (TILE_SIZE - 1);
-    double ab;
-    center.re = center.re - (length / 2);
-    ab = center.re;
-    center.im = center.im - (length / 2);
-
-    //20 + TILE_SIZE/2;
+    double scaledLength;
+    scaledLength = scale * (TILE_SIZE);
+    double realCenter;
+    center.re = center.re - (scaledLength / 2);
+    realCenter = center.re;
+    center.im = center.im - (scaledLength / 2);
+    // The nested loop that stores the number of steps within the array.
+    // The while loop will call on scapeSteps in order to properly
+    // fill the array.
     while (row < TILE_SIZE) {
-        center.re = ab;
+        center.re = realCenter;
         column = 0;
-        //column = 20 - TILE_SIZE/2;
         while (column < TILE_SIZE) {
-            // centering
-            // The code below is the problem, it's somehow printing off
-            // duplicates of the set.
-
-            // calculate current point
-            //X = X + (column * scale);
-            //Y = Y + (row * scale);
-            //printf("%d, %d\n", column, row);
-            //printf("%lf, %lf\n", scaleX, scaleY);
-            complex g = {center.re, center.im};
-            //printf("%lf %lf\n", g.re, g.im);
-
-            grid[row][column] = escapeSteps(g);
-            //if (grid[row][column] == 256) {
-                //printf("*");
-            //}
-            //else {
-                //printf(" ");
-            //}
+            complex location = {center.re, center.im};
+            grid[row][column] = escapeSteps(location);
             column++;
-            center.re += scale;
+            center.re = center.re + scale;
         }
         row++;
-        center.im += scale;
+        center.im = center.im + scale;
     }
 }
 
 // Add your own functions here.
 // Remember to make them static.
 static complex complexMultiply(complex a, complex b){
-    // PUT YOUR CODE HERE;
+    // Does the necessary complex multiplication needed for escapSteps.
     complex value = {
         .re = (a.re * b.re) - (a.im * b.im),
         .im = (a.im * b.re) + (a.re * b.im)
@@ -139,7 +118,7 @@ static complex complexMultiply(complex a, complex b){
     return value;
 }
 static complex complexAdd(complex a, complex b){
-    // PUT YOUR CODE HERE;
+    // Does complex number addition needed for escapeSteps.
     complex value;
     value.re = a.re + b.re;
     value.im = a.im + b.im;
@@ -147,17 +126,22 @@ static complex complexAdd(complex a, complex b){
     return value;
 }
 static double complexAbsolute(complex c) {
-    // PUT YOUR CODE HERE;
+    // Takes the absolute value, but will take the square of this, as
+    // it follows similar logic to taking square-root. Instead,
+    // the #define for BREAK_OUT is also squared.
     double ab = (c.re * c.re + c.im * c.im);
-
-    return ab; // CHANGE THIS TO YOUR RETURN VALUE
+    return ab;
 }
 static double power (int base, int power) {
+    // Set up the values to do the mathematics behind taking a value
+    // to a certain power.
     int i = 0;
-    double calcResult = 1;
+    double storedPower = 1;
+    // Use a loop to continually multiply to the specified level that
+    // is parsed into the program.
     while (i < power) {
-        calcResult *= base;
+        storedPower = storedPower * base;
         i++;
     }
-    return calcResult;
+    return storedPower;
 }

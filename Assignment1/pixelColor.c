@@ -1,11 +1,12 @@
 // Assignment 1 Mandelbrot: Pixel Color
 //
 // Completed by
-//  ... (z0000000)
-//  ... (z0000000)
-//
-// Modified on 2017-??-??
+//  Michaela (z5117328)
+//  Jack (z5162832)
+//  Oscar (z5160173)
+// Modified on 2017-16-09
 // Tutor's name (dayHH-lab)
+// Alex Hinds (Tuesday 9-12)
 
 #include "mandelbrot.h"
 #include "pixelColor.h"
@@ -20,8 +21,6 @@ pixel pixelColor(int steps) {
         .green = steps,
         .blue = steps
     };
-
     // COMPLETE THIS FUNCTION
-
     return color;
 }
