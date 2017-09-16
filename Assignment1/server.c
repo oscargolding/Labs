@@ -25,7 +25,7 @@
 
 #define SIMPLE_SERVER_VERSION 3.0
 #define REQUEST_BUFFER_SIZE 1000
-#define DEFAULT_PORT 1511
+#define DEFAULT_PORT 12345
 // after serving this many pages+images the server will halt
 #define NUMBER_OF_PAGES_TO_SERVE 1024
 
