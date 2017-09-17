@@ -65,7 +65,7 @@ int escapeSteps(complex c) {
     // Sets the reference point for the Mandelbrot mathematics.
     int steps = 0;
     complex start = {0, 0};
-    // Uses a loop to determine the number of steps before a brakout
+    // Uses a loop to determine the number of steps before a breakout
     // point is actually reached.
     while (complexAbsolute(start) < BREAK_OUT && steps < MAX_STEPS) {
         start = complexMultiply(start, start);
@@ -91,7 +91,7 @@ void escapeGrid(int grid[TILE_SIZE][TILE_SIZE], complex center, int z) {
     realCenter = center.re;
     center.im = center.im - (scaledLength / 2);
     // The nested loop that stores the number of steps within the array.
-    // The while loop will call on scapeSteps in order to properly
+    // The while loop will call on escapeSteps in order to properly
     // fill the array.
     while (row < TILE_SIZE) {
         center.re = realCenter;
