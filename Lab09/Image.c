@@ -12,12 +12,16 @@ typedef struct _image{
 
 // Given a width and a height, creates a new `Image`.
 Image newImage (unsigned int width, unsigned int height){
-    Image newImage = calloc(1,sizeof(image));
-
-
+    //Image newImage = calloc(1,sizeof(image));
+    Image newImage = calloc(1, sizeof(image));
     newImage->height = height;
     newImage->width = width;
-    newImage->pixels[height][width];
+    newImage->pixels = malloc(width * sizeof(image));
+    int i = 0;
+    while (i < width) {
+        newImage->pixels[i] = malloc(height * sizeof(image));
+        i++;
+    }
 
     return newImage;
 }
