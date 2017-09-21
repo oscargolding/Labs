@@ -20,17 +20,16 @@ typedef struct _string {
 
 static int getLength(char * str) {
     int length = 0;
-
     while(str[length] != '\0'){
         length ++;
     }
     return length;
 }
-
 String newString (char *str){
     String newString = calloc(1, sizeof(string));
     //newString->characters = stringClone(str);
-
+    // Use the size of the string struct just created. This will
+    // allocate the appropriate size for it in the heap.
     newString->length = getLength(str);
     newString->characters = calloc(newString->length+1, sizeof(char));
 
@@ -39,21 +38,15 @@ String newString (char *str){
         newString->characters[i] = str[i];
         i++;
     }
-
-
     return newString;
 }
-
-
 void destroyString (String s){
     free(s->characters);
     free(s);
 }
-
 int stringLength (String s){
     return s->length;
 }
-
 String stringClone (String s){
     int i = 0;
     //printf("length of string to copy is %d\n",(s->length));
@@ -64,11 +57,9 @@ String stringClone (String s){
         i++;
     }
     clonedString[i] = '\0';
-
     String clone = newString(clonedString);
     return clone;
 }
-
 char stringAt (String s, int index){
     if (index < 0 || index > stringLength(s)){
         errx(EXIT_FAILURE, "Invalid index");
@@ -77,7 +68,6 @@ char stringAt (String s, int index){
         return character;
     }
 }
-
 int stringFindChar (String s, char find){
     int i = 0;
     int foundMatch = 0;
@@ -88,17 +78,13 @@ int stringFindChar (String s, char find){
             i ++;
         }
     }
-
     if (foundMatch == 1){
         return i+1;//since it indexes from 0.
     } else {
         return -1;
     }
 }
-
-
 int stringsEqual (String s1, String s2) {
-
     if (s1->length != s2->length) {
         return FALSE;
     } else {
@@ -115,7 +101,6 @@ int stringsEqual (String s1, String s2) {
         return match;
     }
 }
-
 String stringConcat (String s1, String s2){
     int newLength = s1->length + s2->length;
     char joinedString[newLength+1];
@@ -125,7 +110,6 @@ String stringConcat (String s1, String s2){
         i++;
     }
     int j = 0;
-
     while (j < s2->length) {
         joinedString[i] = s2->characters[j];
         i++;
