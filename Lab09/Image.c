@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "Image.h"
 #include <err.h>
+#include <math.h>
 
 typedef struct _image{
     unsigned int height;
@@ -93,4 +94,53 @@ void imageSetPixel (Image i, point p, pixel color){
 
     //now set the pixel in the array to be this new pixel
     i->pixels[y][x] = newPixel;
+}
+void imageDrawCircle (
+    Image i, pixel color, point centre, unsigned int radius) {
+        // Takes the bottom left of generate Image i, and increments
+        // using circle arithmetic.
+        int startX = centre.x - i->width / 2;
+        int startY = centre.y - i->height / 2;
+        while (startY < i->height) {
+            startX = centre.x - i->width / 2;
+            while (startX < i->width) {
+                double distance = sqrt((double)(startY-radius)*
+                (startY-radius)+(startX-radius)*(startX-radius));
+                if (distance > radius - 0.5 && distance < radius + 0.5) {
+                    i->pixels[startY][startX] = color;
+                }
+                startX++;
+            }
+            startY++;
+        }
+}
+void imageDrawLine (Image i, pixel color, point start, point end) {
+
+    dx = (end.x - start.x);
+    dy = (end.y - start.y);
+    int steps;
+    if (absolute(dx) > absolute(dy)) {
+        steps = absolute(dx);
+    } else {
+        steps = absolute(dy);
+    }
+    int p = 2 * dy - dx;
+    int x = start.x;
+    int y = start.y;
+    int startX = start.x - i->width / 2;
+    int startY = start.y - i->height / 2;
+    while (startY < i->height) {
+        startX = start.x - i->width / 2;
+        while (startX < i->width) {
+            if (p > 0) {
+                i->pixels[startY][startX] = color;
+                y = y + 1;
+                p = p + 2 * dy - 2 * dx;
+            } else {
+                p = p + 2 * dy;
+            }
+            startX++;
+        }
+        startY++;
+    }
 }
