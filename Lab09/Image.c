@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Image.h"
+#include <err.h>
 
 typedef struct _image{
     unsigned int height;
@@ -12,16 +13,37 @@ typedef struct _image{
 
 // Given a width and a height, creates a new `Image`.
 Image newImage (unsigned int width, unsigned int height){
-    //Image newImage = calloc(1,sizeof(image));
-    Image newImage = calloc(1, sizeof(image));
+    Image newImage = calloc(1,sizeof(image));
+
     newImage->height = height;
     newImage->width = width;
-    newImage->pixels = malloc(width * sizeof(image));
+
+    newImage->pixels = calloc(height, sizeof(pixel*));
+
     int i = 0;
-    while (i < width) {
-        newImage->pixels[i] = malloc(height * sizeof(image));
+    while (i < height){
+        newImage->pixels[i] = calloc(width, sizeof(pixel));
         i++;
     }
+
+    if(newImage->pixels == NULL){
+        err(EXIT_FAILURE,"COULDNT ALLOCATE PIXEL MEMORY");
+    }
+    //newImage->pixels[height][width];
+
+    pixel defaultPixel = {0x7D,0x7C,0x7B};
+    //Now set all of the pixels to be default color.
+    int row = 0;
+    int col = 0;
+    while (row < height){
+        col = 0;
+        while (col < width){
+            newImage->pixels[row][col] = defaultPixel;
+            col ++;
+        }
+        row++;
+    }
+
 
     return newImage;
 }

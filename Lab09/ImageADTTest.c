@@ -39,9 +39,9 @@ int main(void) {
     printf("start\n");
     int size = imageAsBMP(myImage, &buf);
     printf("next\n");
-    //fwrite(buf, sizeof(unsigned char), size, stdout);
-    //printf("4regrhe\n");
-    //free(buf);
+    fwrite(buf, sizeof(unsigned char), size, stdout);
+    printf("4regrhe\n");
+    free(buf);
 
     printf("Passed all Tests!\n");
 
