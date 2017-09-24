@@ -1,4 +1,6 @@
-//ADT related code for Image ADT activity
+// ADT related code for Image ADT activity
+// Created by: Tim Ryan (z5080316)
+//             Oscar Golding (z5160173)
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -144,4 +146,39 @@ void imageDrawLine (Image i, pixel color, point start, point end) {
         }
         startY++;
     }
+}
+void imageDrawRectangle (Image i, pixel color, point bottomLeft,
+    point topRight){
+    // If the bottomLeft point is not left of the topRight, or the
+    // bottomLeft is not below the topRight, then there is an input
+    // error and shouldn't be processed as this would give unexpected
+    // output compared to what the user expected.
+    // The 'origin' will be defined as the top left of the image (0,0)
+    if (!(bottomLeft.x < topRight.x && bottomLeft.y > topRight.y)){
+        errx(EXIT_FAILURE, "Invalid rectangle co-ordinates\n");
+    }
+    if (bottomLeft.x < 1){
+        errx(EXIT_FAILURE, "Invalid start location. The range is from \
+        (1,1) to (16,16)\n");
+    } if (topRight.y > 16){
+        errx(EXIT_FAILURE, "Invalid end location. The range is from \
+        (1,1) to (16,16)\n");
+    }
+
+    int rowStart = topRight.y -1;
+    int rowEnd = bottomLeft.y -1;
+    int colStart = bottomLeft.x -1;
+    int colEnd = topRight.x -1;
+
+    int currRow = rowStart;
+    int currCol = colStart;
+    while (currRow <= rowEnd){
+        currCol = colStart;
+        while(currCol <= colEnd){
+            i->pixels[currRow][currCol] = color;
+            currCol ++;
+        }
+        currRow ++;
+    }
+
 }
