@@ -12,6 +12,7 @@ typedef struct _image{
     pixel **pixels;
 }image;
 
+
 // Given a width and a height, creates a new `Image`.
 Image newImage (unsigned int width, unsigned int height){
     Image newImage = calloc(1,sizeof(image));
@@ -99,14 +100,18 @@ void imageDrawCircle (
     Image i, pixel color, point centre, unsigned int radius) {
         // Takes the bottom left of generate Image i, and increments
         // using circle arithmetic.
-        int startX = centre.x - i->width / 2;
-        int startY = centre.y - i->height / 2;
+        // If the point lies on the diameter of the circle, it will
+        // be coloured in.
+        int startX = 0;
+        int startY = 0;
+        int d, a;
         while (startY < i->height) {
-            startX = centre.x - i->width / 2;
-            while (startX < i->width) {
-                double distance = sqrt((double)(startY-radius)*
-                (startY-radius)+(startX-radius)*(startX-radius));
-                if (distance > radius - 0.5 && distance < radius + 0.5) {
+            startX = 0;
+            while (startX <i->width) {
+                a = ((startY - centre.y)*(startY - centre.y) +
+                    (startX - centre.x)*(startX - centre.x));
+                d = sqrt(a);
+                if (radius == d) {
                     i->pixels[startY][startX] = color;
                 }
                 startX++;
@@ -115,26 +120,20 @@ void imageDrawCircle (
         }
 }
 void imageDrawLine (Image i, pixel color, point start, point end) {
-
+    // Using arithmetic logic from the Wiki for Bresenham.
+    // Determines whether a point actually lies on a line using
+    // an equation. If so, colour these specific points.
     int dx = (end.x - start.x);
     int dy = (end.y - start.y);
-    int steps;
-    if (abs(dx) > abs(dy)) {
-        steps = abs(dx);
-    } else {
-        steps = abs(dy);
-    }
-    int p = 2 * dy - dx;
-    int startX = start.x;
-    int startY = start.y;
+    int b = start.y - ((dy/dx) * start.x);
+    int d = 2 * dy - dx;
+    int startX = 0;
+    int startY = 0;
     while (startY < i->height) {
-        startX = start.x;
+        startX = 0;
         while (startX < i->width) {
-            if (p > 0) {
+            if (dy*start.x + (-dx * start.y) + (dx * b) == 0) {
                 i->pixels[startY][startX] = color;
-                p = p + 2 * dy - 2 * dx;
-            } else {
-                p = p + 2 * dy;
             }
             startX++;
         }
