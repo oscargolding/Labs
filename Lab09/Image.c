@@ -111,7 +111,7 @@ void imageDrawCircle (
                 a = ((startY - centre.y)*(startY - centre.y) +
                     (startX - centre.x)*(startX - centre.x));
                 d = sqrt(a);
-                if (radius == d) {
+                if (radius == d || radius > abs(d)) {
                     i->pixels[startY][startX] = color;
                 }
                 startX++;
@@ -135,7 +135,10 @@ void imageDrawLine (Image i, pixel color, point start, point end) {
             if (dy*startX + (-dx * startY) + (dx * b) == 0) {
                 startX = (int)startX;
                 startY = (int)startY;
-                i->pixels[startY][startX] = color;
+                if (startX <= end.x && startY <= end.y &&
+                    startX >= start.x && startY >= start.y) {
+                    i->pixels[startY][startX] = color;
+                }
             }
             startX++;
         }
