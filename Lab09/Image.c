@@ -116,25 +116,22 @@ void imageDrawCircle (
 }
 void imageDrawLine (Image i, pixel color, point start, point end) {
 
-    dx = (end.x - start.x);
-    dy = (end.y - start.y);
+    int dx = (end.x - start.x);
+    int dy = (end.y - start.y);
     int steps;
-    if (absolute(dx) > absolute(dy)) {
-        steps = absolute(dx);
+    if (abs(dx) > abs(dy)) {
+        steps = abs(dx);
     } else {
-        steps = absolute(dy);
+        steps = abs(dy);
     }
     int p = 2 * dy - dx;
-    int x = start.x;
-    int y = start.y;
-    int startX = start.x - i->width / 2;
-    int startY = start.y - i->height / 2;
+    int startX = start.x;
+    int startY = start.y;
     while (startY < i->height) {
-        startX = start.x - i->width / 2;
+        startX = start.x;
         while (startX < i->width) {
             if (p > 0) {
                 i->pixels[startY][startX] = color;
-                y = y + 1;
                 p = p + 2 * dy - 2 * dx;
             } else {
                 p = p + 2 * dy;

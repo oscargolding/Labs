@@ -42,6 +42,10 @@ int main(void) {
     fwrite(buf, sizeof(unsigned char), size, stdout);
     printf("4regrhe\n");
     free(buf);
+    
+    point start = {0, 0};
+    point end = {120, 120};
+    imageDrawLine (myImage, myColor, start, end);
 
     printf("Passed all Tests!\n");
 
