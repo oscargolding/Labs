@@ -123,16 +123,18 @@ void imageDrawLine (Image i, pixel color, point start, point end) {
     // Using arithmetic logic from the Wiki for Bresenham.
     // Determines whether a point actually lies on a line using
     // an equation. If so, colour these specific points.
-    int dx = (end.x - start.x);
-    int dy = (end.y - start.y);
-    int b = start.y - ((dy/dx) * start.x);
-    int d = 2 * dy - dx;
+    double dx = (end.x - start.x);
+    double dy = (end.y - start.y);
+    double b = start.y - ((dy/dx) * start.x);
+    double d = 2 * dy - dx;
     int startX = 0;
     int startY = 0;
     while (startY < i->height) {
         startX = 0;
         while (startX < i->width) {
-            if (dy*start.x + (-dx * start.y) + (dx * b) == 0) {
+            if (dy*startX + (-dx * startY) + (dx * b) == 0) {
+                startX = (int)startX;
+                startY = (int)startY;
                 i->pixels[startY][startX] = color;
             }
             startX++;

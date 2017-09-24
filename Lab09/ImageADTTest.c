@@ -7,13 +7,13 @@
 int main(void) {
     printf("Starting Tests...\n");
 
-    Image myImage = newImage(1,1);
+    Image myImage = newImage(16,16);
     //imageSetPixel (Image i, point p, pixel color){
     point myPoint;
     myPoint.x = 0;
     myPoint.y = 0;
 
-    pixel myColor = {125,125,125};
+    pixel myColor = {87,87,87};
 
 
     printf("Starting pixel tests...\n");
@@ -40,12 +40,31 @@ int main(void) {
     int size = imageAsBMP(myImage, &buf);
     printf("next\n");
     fwrite(buf, sizeof(unsigned char), size, stdout);
+    printf("\n");
     printf("4regrhe\n");
     free(buf);
-    
-    point start = {0, 0};
-    point end = {120, 120};
-    imageDrawLine (myImage, myColor, start, end);
+
+    point start = {4, 4};
+    point end = {8, 8};
+
+    pixel linePixel = {126,126,126};
+
+    unsigned char *ayylmao;
+    imageDrawLine (myImage, linePixel, start, end);
+    int sizeLine = imageAsBMP(myImage, &ayylmao);
+    fwrite(ayylmao, sizeof(unsigned char), sizeLine, stdout);
+    printf("\n");
+
+    Image circleChange = newImage(16,16);
+
+    point centre = {5,5};
+    unsigned int radius = 4;
+
+    unsigned char *circleString;
+    imageDrawCircle (circleChange, linePixel, centre, radius);
+    int sizeCircle = imageAsBMP(circleChange, &circleString);
+    fwrite(circleString, sizeof(unsigned char), sizeCircle, stdout);
+    printf("\n");
 
     printf("Passed all Tests!\n");
 
